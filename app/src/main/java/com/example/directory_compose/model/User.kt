@@ -4,4 +4,8 @@ data class User(
     var userId: Int,
     var userName: String,
     var userTel: String
-)
+) {
+    override fun toString(): String {
+        return "User(userId=$userId, userName='$userName', userTel='$userTel')"
+    }
+}

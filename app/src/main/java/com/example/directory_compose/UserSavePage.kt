@@ -22,14 +22,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.directory_compose.model.User
+import com.example.directory_compose.viewmodel.UserDetailViewModel
+import com.example.directory_compose.viewmodel.UserSaveViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UserSavePage() {
+    val viewModel: UserSaveViewModel = viewModel()
     val userName = remember { mutableStateOf("") }
     val userTel = remember { mutableStateOf("") }
     val localFocusManager = LocalFocusManager.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,8 +64,7 @@ fun UserSavePage() {
                     onClick = {
                         val name = userName.value
                         val tel = userTel.value
-                        Log.d("bekbek", "Username: $name tel: $tel")
-
+                        viewModel.saveUser(User(1, name, tel))
                         localFocusManager.clearFocus()
                     },
                     modifier = Modifier.size(250.dp, 50.dp)

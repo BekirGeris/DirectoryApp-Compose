@@ -23,12 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.directory_compose.model.User
+import com.example.directory_compose.viewmodel.HomeViewModel
+import com.example.directory_compose.viewmodel.UserDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UserDetailPage(user: User) {
+    val viewModel: UserDetailViewModel = viewModel()
     val userName = remember { mutableStateOf("") }
     val userTel = remember { mutableStateOf("") }
     val localFocusManager = LocalFocusManager.current
@@ -65,8 +69,7 @@ fun UserDetailPage(user: User) {
                     onClick = {
                         val name = userName.value
                         val tel = userTel.value
-                        Log.d("bekbek", "User id: ${user.userId} username: $name tel: $tel")
-
+                        viewModel.updateUser(User(user.userId, name, tel))
                         localFocusManager.clearFocus()
                     },
                     modifier = Modifier.size(250.dp, 50.dp)

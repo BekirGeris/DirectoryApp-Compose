@@ -24,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,31 +33,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.directory_compose.model.User
+import com.example.directory_compose.viewmodel.HomeViewModel
 import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
+    val viewModel: HomeViewModel = viewModel()
     var isSearch = remember { mutableStateOf(false) }
     var searchText = remember { mutableStateOf("") }
-    var userList = remember { mutableStateListOf<User>() }
-
-    LaunchedEffect(key1 = true) {
-        val u1 = User(1, "bekir", "45874865456")
-        val u2 = User(2, "zeynep", "4964684355")
-        val u3 = User(3, "ömer", "5754545")
-        val u4 = User(4, "seda", "4546421658")
-
-        for (i in 1..100) {
-            userList.add(u1)
-            userList.add(u2)
-            userList.add(u3)
-            userList.add(u4)
-        }
-    }
+    var userList = viewModel.userList.observeAsState()
 
     Scaffold(
         topBar = {
@@ -67,7 +57,7 @@ fun HomePage(navController: NavController) {
                             value = searchText.value,
                             onValueChange = {
                                 searchText.value = it
-                                Log.d("bekbek", "Search text: $it")
+                                viewModel.searchUser(it)
                             },
                             label = { Text(text = "Search") },
                             colors = TextFieldDefaults.textFieldColors(
@@ -122,9 +112,9 @@ fun HomePage(navController: NavController) {
                 .padding(top = 66.dp)
                 .fillMaxSize()) {
                 items(
-                    count = userList.count(),
+                    count = userList.value!!.count(),
                     itemContent = {
-                        val user = userList[it]
+                        val user = userList.value!![it]
 
                         Card(
                             modifier = Modifier
@@ -150,7 +140,7 @@ fun HomePage(navController: NavController) {
                                     Text(text = "${user.userName} - ${user.userTel}")
                                     IconButton(
                                         onClick = {
-                                            Log.d("bekbek", "User delete user id: ${user.userId}")
+                                            viewModel.deleteUser(user)
                                         }
                                     ) {
                                         Icon(
