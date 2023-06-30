@@ -68,7 +68,7 @@ fun UserSavePage() {
                     onClick = {
                         val name = userName.value
                         val tel = userTel.value
-                        viewModel.saveUser(User(0, name, tel))
+                        viewModel.saveUser(User(0, name, tel, ""))
                         localFocusManager.clearFocus()
                     },
                     modifier = Modifier.size(250.dp, 50.dp)

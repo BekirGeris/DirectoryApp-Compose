@@ -4,12 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.directory_compose.model.User
-import com.example.directory_compose.repo.lacal.LocalRepository
-import com.example.directory_compose.repo.remote.RemoteRepositoryImpl
+import com.example.directory_compose.repo.remote.FirebaseRepository
 
 class HomeViewModel constructor(application: Application) : AndroidViewModel(application) {
     var userList = MutableLiveData<List<User>>()
-    private var repo = RemoteRepositoryImpl()
+    private var repo = FirebaseRepository()
 
     init {
         userList = repo.userList

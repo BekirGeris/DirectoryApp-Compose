@@ -20,9 +20,10 @@ data class User(
     @NotNull
     @ColumnInfo(name = "user_tel")
     @SerializedName("kisi_tel")
-    var userTel: String
+    var userTel: String,
+    var key: String
 ) {
     override fun toString(): String {
-        return "User(userId=$userId, userName='$userName', userTel='$userTel')"
+        return "User(userId=$userId, userName='$userName', userTel='$userTel', key='$key')"
     }
 }

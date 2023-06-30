@@ -73,7 +73,7 @@ fun UserDetailPage(user: User) {
                     onClick = {
                         val name = userName.value
                         val tel = userTel.value
-                        viewModel.updateUser(User(user.userId, name, tel))
+                        viewModel.updateUser(User(user.userId, name, tel, user.key))
                         localFocusManager.clearFocus()
                     },
                     modifier = Modifier.size(250.dp, 50.dp)
