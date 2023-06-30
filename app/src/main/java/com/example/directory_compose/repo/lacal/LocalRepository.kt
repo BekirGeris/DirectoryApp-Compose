@@ -1,7 +1,6 @@
-package com.example.directory_compose.repo.local
+package com.example.directory_compose.repo.lacal
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.directory_compose.data.db.AppDatabase
 import com.example.directory_compose.model.User
@@ -10,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class UserDaoRepository(context: Context) {
+class LocalRepository(context: Context) {
     var userList = MutableLiveData<List<User>>()
     var appDatabase: AppDatabase
 
