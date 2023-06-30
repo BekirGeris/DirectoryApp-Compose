@@ -1,7 +1,7 @@
-package com.example.directory_compose
+package com.example.directory_compose.ui.view.page
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,28 +25,36 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.directory_compose.model.User
+import com.example.directory_compose.R
 import com.example.directory_compose.viewmodel.HomeViewModel
+import com.example.directory_compose.viewmodelfactory.HomePageFactory
 import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
-    val viewModel: HomeViewModel = viewModel()
+    val context = LocalContext.current
+    val viewModel: HomeViewModel = viewModel(
+        factory = HomePageFactory(context.applicationContext as Application)
+    )
     var isSearch = remember { mutableStateOf(false) }
     var searchText = remember { mutableStateOf("") }
     var userList = viewModel.userList.observeAsState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getAllUsers()
+    }
 
     Scaffold(
         topBar = {
@@ -112,7 +120,7 @@ fun HomePage(navController: NavController) {
                 .padding(top = 66.dp)
                 .fillMaxSize()) {
                 items(
-                    count = userList.value!!.count(),
+                    count = userList.value?.count() ?: 0,
                     itemContent = {
                         val user = userList.value!![it]
 

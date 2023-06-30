@@ -1,4 +1,4 @@
-package com.example.directory_compose
+package com.example.directory_compose.ui.view.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.directory_compose.ui.view.page.HomePage
+import com.example.directory_compose.ui.view.page.UserDetailPage
+import com.example.directory_compose.ui.view.page.UserSavePage
 import com.example.directory_compose.model.User
 import com.example.directory_compose.ui.theme.DirectoryComposeTheme
 import com.google.gson.Gson
